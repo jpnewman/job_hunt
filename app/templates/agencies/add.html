@@ -1,0 +1,26 @@
+{% set active_page = "agencies" %}
+{% extends "base.html" %}
+{% block title %} - Agency{% endblock %}
+{% block content %}
+{% from "forms/macros.html" import render_field %}
+<script type="text/javascript">
+$("a[rel=tooltip]").tooltip();
+$("a[rel=popover]").popover({trigger:'hover'});
+</script>
+<form method="POST" action="add" class="form form-horizontal">
+  <legend>Register Agency</legend>
+  {{ form.csrf_token }}
+  {{ render_field(form.name, class="input-xlarge",placeholder="name") }}
+  {{ render_field(form.address, class="input-xlarge",placeholder="address") }}
+  {{ render_field(form.phone_number, class="input-xlarge",placeholder="phone_number") }}
+  {{ render_field(form.email, class="input-xlarge",placeholder="email") }}
+  {{ render_field(form.website, class="input-xlarge",placeholder="website") }}
+  <div class="control-group">
+    <label class="control-label"></label>
+    <div class="controls">
+      <button type="submit" id="register_agency" class="btn btn-primary">Register</button>
+      <a href="." class="btn btn-primary">Cancel</a>
+    </div>
+  </div>
+</form>
+{% endblock %}

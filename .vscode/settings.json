@@ -1,0 +1,14 @@
+{
+    "python.pythonPath": "${workspaceFolder}/venv/bin/python",
+    "cSpell.words": [
+        "attm",
+        "creds",
+        "fname",
+        "gmail",
+        "jsonify",
+        "mktime",
+        "oauth",
+        "strftime",
+        "wtforms"
+    ]
+}

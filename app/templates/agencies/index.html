@@ -1,0 +1,35 @@
+{% set active_page = "agencies" %}
+{% extends "base.html" %}
+{% block title %} - Agencies{% endblock %}
+{% block content %}
+<div class="add-record"><a href="add">+</a></div>
+<div>
+  <h2>Agencies</h2>
+  {% if agencies %}
+  <div class="accordion" id="accordion2">
+    {% for agency in agencies %}
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <h4>
+          <a class="accordion-toggle collapsed in" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{agency.id}}"><i class="icon-expand-alt pull-right"></i><i class="icon-collapse-alt pull-right"></i>{{agency.name}}</a>
+        </h4>
+      </div>
+      <div class="accordion-body collapse" id="collapse{{agency.id}}">
+      {% if agency.recruiters %}
+        <ul>
+        {% for recruiter in agency.recruiters %}
+          <li>{{ recruiter.name }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div>
+    <h2>No Agencies Registered</h2>
+  <div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% set active_page = "emails" %}
+{% extends "base.html" %}
+{% block title %} - Emails{% endblock %}
+{% block content %}
+<div>
+  <h2>Emails ({{ emails | length }})</h2>
+  {% if emails %}
+  <div class="accordion" id="accordion2">
+    {% for email in emails %}
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle collapsed in" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{email.id}}">
+          <i class="icon-expand-alt pull-right"></i>
+          <i class="icon-collapse-alt pull-right"></i>
+            <div class="email-header">
+              {% if email.attachments|length >= 1 %}
+              <div><span class="fas fa-paperclip"></span></div>
+              {% else %}
+              <div></div>
+              {% endif %}
+              <div>{{ email.sender }}</div>
+              <div>{{email.from_address}}</div>
+              <div>{{email.subject}}</div>
+              <div>{{email.date}}</div>
+            </div>
+          </a>
+      </div>
+      <div class="accordion-body collapse" id="collapse{{email.id}}">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-html-tab-{{ loop.index }}" data-toggle="tab" href="#nav-html-{{ loop.index }}" role="tab" aria-controls="nav-html-{{ loop.index }}" aria-selected="true">HTML</a>
+            <a class="nav-item nav-link" id="nav-text-tab-{{ loop.index }}" data-toggle="tab" href="#nav-text-{{ loop.index }}" role="tab" aria-controls="nav-text-{{ loop.index }}" aria-selected="false">Text</a>
+            <a class="nav-item nav-link" id="nav-raw-tab-{{ loop.index }}" data-toggle="tab" href="#nav-raw-{{ loop.index }}" role="tab" aria-controls="nav-raw-{{ loop.index }}" aria-selected="false">Raw</a>
+            <a class="nav-item nav-link" id="nav-attm-tab-{{ loop.index }}" data-toggle="tab" href="#nav-attm-{{ loop.index }}" role="tab" aria-controls="nav-attm-{{ loop.index }}" aria-selected="false">Attachments ({{ email.attachments|length }})</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-html-{{ loop.index }}" role="tabpanel" aria-labelledby="nav-html-tab-{{ loop.index }}">
+            <h4>{{- email.subject|safe -}}</h4>
+            {{- email.html|safe -}}
+          </div>
+          <div class="tab-pane fade" id="nav-text-{{ loop.index }}" role="tabpanel" aria-labelledby="nav-text-tab-{{ loop.index }}">
+            {{- email.plain_text|trim|safe -}}
+          </div>
+          <div class="tab-pane fade" id="nav-raw-{{ loop.index }}" role="tabpanel" aria-labelledby="nav-raw-tab-{{ loop.index }}">
+            <pre>
+              {{- email.raw|trim -}}
+            </pre>
+          </div>
+          <div class="tab-pane fade" id="nav-attm-{{ loop.index }}" role="tabpanel" aria-labelledby="nav-attm-tab-{{ loop.index }}">
+            {% for attachment in email.attachments %}
+            <a href="attachment/{{ attachment.id }}">
+              <div class="row">
+                <div class="col-auto"><span class="fas fa-paperclip"></span></div>
+                <div class="col-auto">{{ attachment.name }}</div>
+                <div class="col-auto">{{ attachment.size }}</div>
+                <!-- <div class="col-auto">{{ attachment.content_type }}</div> -->
+                <div class="col-auto">{{ attachment.create_date }}</div>
+                <div class="col-auto">{{ attachment.mod_date }}</div>
+                <div class="col-auto">{{ attachment.read_date }}</div>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div>
+    <h2>No Emails</h2>
+  <div>
+  {% endif %}
+</div>
+{% endblock %}

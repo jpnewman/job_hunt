@@ -1,0 +1,32 @@
+{% set active_page = "recruiters" %}
+{% extends "base.html" %}
+{% block title %} - Recruiter{% endblock %}
+{% block content %}
+<div class="add-record"><a href="add">+</a></div>
+<div>
+  <h2>Recruiters</h2>
+  {% if recruiters %}
+  <div class="accordion" id="accordion2">
+    {% for recruiter in recruiters %}
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <h4>
+          <a class="accordion-toggle collapsed in" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{recruiter.id}}"><i class="icon-expand-alt pull-right"></i><i class="icon-collapse-alt pull-right"></i>{{recruiter.name}}</a>
+        </h4>
+      </div>
+      <div class="accordion-body collapse" id="collapse{{recruiter.id}}">
+
+
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div>
+    <h2>No Recruiters Registered</h2>
+  <div>
+  {% endif %}
+</div>
+
+{% endblock %}

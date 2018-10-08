@@ -1,0 +1,20 @@
+{% set active_page = "jobs" %}
+{% extends "base.html" %}
+{% block title %} - Jobs{% endblock %}
+{% block content %}
+<div class="add-record"><a href="add">+</a></div>
+<div>
+  <h2>Jobs</h2>
+  {% if jobs %}
+    <ul>
+    {% for job in jobs %}
+      <li>{{jobs.name}}</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+  <div>
+    <h2>No Jobs Registered</h2>
+  <div>
+  {% endif %}
+</div>
+{% endblock %}

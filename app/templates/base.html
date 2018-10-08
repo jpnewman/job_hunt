@@ -1,0 +1,90 @@
+{% set navigation_bar = [
+    ('/jobs/', 'jobs', 'Jobs'),
+    ('/agencies/', 'agencies', 'Agencies'),
+    ('/recruiters/', 'recruiters', 'Recruiters'),
+    ('/emails/', 'emails', 'Emails')
+] -%}
+{% set active_page = active_page|default('index') -%}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <title>Job Hunt {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Job Hunt">
+    <meta name="keywords" content="Job Hunting">
+    <meta name="author" content="John Paul Newman">
+    <meta charset="utf-8">
+
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" crossorigin="anonymous" />
+    <link href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}" rel="stylesheet" crossorigin="anonymous" />
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" crossorigin="anonymous" />
+
+    <!-- SUPPORT FOR IE6-8 OF HTML5 ELEMENTS -->
+    <!--[if lt IE 9]>
+          <script src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
+      <![endif]-->
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}" crossorigin="anonymous"></script>
+    {% endblock %}
+  </head>
+
+  <body>
+  {% block body %}
+    {% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">Job Hunt</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+          {% for href, id, caption in navigation_bar %}
+          {% if id == active_page %}
+          <li class="nav-item active">
+          {% else %}
+          <li class="nav-item">
+          {% endif %}
+            <a class="nav-link" href="{{ href|e }}">{{ caption|e }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </nav>
+    {% endblock %}
+    <div class="container page">
+        {% for message in get_flashed_messages() %}
+          <div class="flashed-message alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{message}}
+            <script>
+              $(".flashed-message").alert();
+            </script>
+          </div>
+        {% endfor %}
+        <div class="content">
+          {% block content %}
+          {% endblock %}
+        </div>
+
+        <hr>
+
+        {% block footer %}
+        <footer class="footer">
+            <p>&copy; John Paul Newman</p>
+        </footer>
+        {% endblock %}
+
+    </div>
+    {% block js_footer %}
+
+    {% endblock %}
+  {% endblock %}
+  </body>
+</html>
